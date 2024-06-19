@@ -46,7 +46,7 @@ jobs:
         echo "Starting webapp..."
         dotnet run --no-build --project github4women.csproj &
         sleep 10
-        if curl -sSf http://localhost:5299 > /dev/null; then
+        if curl -sSf http://localhost:5000 > /dev/null; then
           echo "Webapp started successfully"
         else
           echo "Failed to start webapp"
