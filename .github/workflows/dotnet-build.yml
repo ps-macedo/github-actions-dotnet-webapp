@@ -39,7 +39,19 @@ jobs:
         echo "Running tests..."
         dotnet test --no-restore --verbosity normal
 
-    # Rodar o webapp
-    - name: Run webapp
+    # Rodar o webapp e verificar se ele inicia corretamente
+    - name: Start webapp and verify
       working-directory: ./github4women
-      run: dotnet run --project github4women.csproj
+      run: |
+        echo "Starting webapp..."
+        nohup dotnet run --no-build --project github4women.csproj &
+        WEBAPP_PID=$!
+        sleep 10
+        if ps -p $WEBAPP_PID > /dev/null
+        then
+          echo "Webapp started successfully"
+          kill $WEBAPP_PID
+        else
+          echo "Failed to start webapp"
+          exit 1
+        fi
