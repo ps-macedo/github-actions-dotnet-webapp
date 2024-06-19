@@ -44,14 +44,6 @@ jobs:
       working-directory: ./github4women
       run: |
         echo "Starting webapp..."
-        nohup dotnet run --no-build --project github4women.csproj &
-        WEBAPP_PID=$!
+        dotnet run --no-build --project github4women.csproj &
         sleep 10
-        if ps -p $WEBAPP_PID > /dev/null
-        then
-          echo "Webapp started successfully"
-          kill $WEBAPP_PID
-        else
-          echo "Failed to start webapp"
-          exit 1
-        fi
+        curl -f http://localhost:5000 || exit 1
