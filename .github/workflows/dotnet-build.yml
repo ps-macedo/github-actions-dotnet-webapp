@@ -1,0 +1,37 @@
+name: .NET Build Workflow
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Action pré-existente para verificar o código do repositório
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Configurar o .NET SDK
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+
+    # Restaurar dependências do .NET
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Build do projeto
+    - name: Build the project
+      run: dotnet build --configuration Release --no-restore
+
+    # Executar testes (script personalizado)
+    - name: Run tests
+      run: |
+        echo "Running tests..."
+        dotnet test --no-restore --verbosity normal
