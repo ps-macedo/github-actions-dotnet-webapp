@@ -40,10 +40,8 @@ jobs:
         dotnet test --no-restore --verbosity normal
 
     # Rodar o webapp e verificar se ele inicia corretamente
-    - name: Start webapp and verify
-      working-directory: ./github4women
-      run: |
-        echo "Starting webapp..."
-        dotnet run --no-build --project github4women.csproj &
-        sleep 10
-        curl -f http://localhost:5299 || exit 1
+    - name: Start and verify webapp
+      uses: coveros/aspnetcore-actions@v2
+      with:
+        project: github4women/github4women.csproj
+        args: --urls http://localhost:5299
