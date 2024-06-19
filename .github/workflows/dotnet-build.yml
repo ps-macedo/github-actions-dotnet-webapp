@@ -41,7 +41,15 @@ jobs:
 
     # Rodar o webapp e verificar se ele inicia corretamente
     - name: Start and verify webapp
-      uses: coveros/aspnetcore-actions@v2
-      with:
-        project: github4women/github4women.csproj
-        args: --urls http://localhost:5299
+      working-directory: ./github4women
+      run: |
+        echo "Starting webapp..."
+        dotnet run --no-build --project github4women.csproj &
+        sleep 10
+        if curl -sSf http://localhost:5299 > /dev/null; then
+          echo "Webapp started successfully"
+        else
+          echo "Failed to start webapp"
+          exit 1
+        fi
+        pkill -f 'dotnet run'
