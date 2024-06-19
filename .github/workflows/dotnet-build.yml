@@ -14,11 +14,11 @@ jobs:
     steps:
     # Action pré-existente para verificar o código do repositório
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4  # Atualizado para usar Node.js 20
 
     # Configurar o .NET SDK
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4  # Atualizado para usar Node.js 20
       with:
         dotnet-version: '6.0.x'
 
