@@ -22,20 +22,24 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
+    # Navegar para o diretório do projeto
+    - name: Navigate to project directory
+      run: cd github4women
+
     # Restaurar dependências do .NET
     - name: Restore dependencies
-      run: dotnet restore '**/*.csproj'
+      run: dotnet restore
 
     # Build do projeto
     - name: Build the project
-      run: dotnet build '**/*.csproj' --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
 
     # Executar testes (script personalizado)
     - name: Run tests
       run: |
         echo "Running tests..."
-        dotnet test '**/*.csproj' --no-restore --verbosity normal
+        dotnet test --no-restore --verbosity normal
 
     # Rodar o webapp
     - name: Run webapp
-      run: dotnet run --project '**/*.csproj'
+      run: dotnet run --project github4women.csproj
