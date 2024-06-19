@@ -16,6 +16,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4  # Atualizado para usar Node.js 20
 
+    # Listar conteúdo do diretório após o checkout
+    - name: List directory contents after checkout
+      run: ls -la
+
     # Configurar o .NET SDK
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4  # Atualizado para usar Node.js 20
@@ -26,17 +30,21 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./github4women/github4women.csproj
 
+    # Listar conteúdo do diretório após o restore
+    - name: List directory contents after restore
+      run: ls -la ./github4women
+
     # Build do projeto
     - name: Build the project
       run: dotnet build ./github4women/github4women.csproj --configuration Release --no-restore
 
+    # Listar conteúdo do diretório após o build
+    - name: List directory contents after build
+      run: ls -la ./github4women/bin/Release/net6.0/
+
     # Executar testes (script personalizado)
     - name: Run tests
       run: dotnet test ./github4women/github4women.csproj --no-restore --verbosity normal
-
-    # Verificar conteúdo do diretório
-    - name: List directory contents
-      run: ls -la ./github4women/bin/Release/net6.0/
 
     # Rodar o webapp e verificar se ele inicia corretamente
     - name: Start and verify webapp
