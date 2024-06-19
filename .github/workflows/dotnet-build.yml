@@ -24,14 +24,18 @@ jobs:
 
     # Restaurar dependências do .NET
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore '**/*.csproj'
 
     # Build do projeto
     - name: Build the project
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build '**/*.csproj' --configuration Release --no-restore
 
     # Executar testes (script personalizado)
     - name: Run tests
       run: |
         echo "Running tests..."
-        dotnet test --no-restore --verbosity normal
+        dotnet test '**/*.csproj' --no-restore --verbosity normal
+
+    # Rodar o webapp
+    - name: Run webapp
+      run: dotnet run --project '**/*.csproj'
