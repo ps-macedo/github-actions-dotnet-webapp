@@ -38,8 +38,12 @@ jobs:
     - name: Build the project
       run: dotnet build ./github4women/github4women.csproj --configuration Release --no-restore
 
-    # Listar conteúdo do diretório após o build
-    - name: List directory contents after build
+    # Listar conteúdo do diretório de saída do build
+    - name: List output directory contents after build
+      run: ls -la ./github4women/bin/Release/
+
+    # Listar conteúdo do diretório de saída do build net6.0
+    - name: List net6.0 directory contents after build
       run: ls -la ./github4women/bin/Release/net6.0/
 
     # Executar testes (script personalizado)
