@@ -34,11 +34,15 @@ jobs:
     - name: Run tests
       run: dotnet test ./github4women/github4women.csproj --no-restore --verbosity normal
 
+    # Verificar conteúdo do diretório
+    - name: List directory contents
+      run: ls -la ./github4women/bin/Release/net6.0/
+
     # Rodar o webapp e verificar se ele inicia corretamente
     - name: Start and verify webapp
       run: |
         echo "Starting webapp..."
-        dotnet run --no-build --project ./github4women/github4women.csproj --urls "http://localhost:5299" &
+        dotnet ./github4women/bin/Release/net6.0/github4women.dll --urls "http://localhost:5299" &
         sleep 10
         if curl -sSf http://localhost:5299 > /dev/null; then
           echo "Webapp started successfully"
@@ -46,4 +50,4 @@ jobs:
           echo "Failed to start webapp"
           exit 1
         fi
-        pkill -f 'dotnet run'
+        pkill -f 'dotnet'
