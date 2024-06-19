@@ -46,4 +46,4 @@ jobs:
         echo "Starting webapp..."
         dotnet run --no-build --project github4women.csproj &
         sleep 10
-        curl -f http://localhost:5000 || exit 1
+        curl -f http://localhost:5299 || exit 1
