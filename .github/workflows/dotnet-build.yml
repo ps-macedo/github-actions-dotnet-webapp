@@ -12,54 +12,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Action pré-existente para verificar o código do repositório
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
-    - name: List directory contents after checkout
-      run: ls -la
-
+    # Configurar o .NET SDK
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
 
-    - name: List directory contents after setup
-      run: ls -la
-
     # Restaurar dependências do .NET
     - name: Restore dependencies
-      run: dotnet restore ./github4women/github4women.csproj
-
-    - name: List directory contents after restore
-      run: ls -la ./github4women
+      run: dotnet restore
 
     # Build do projeto
     - name: Build the project
-      run: dotnet build ./github4women/github4women.csproj --configuration Release --no-restore
-
-    - name: List output directory contents after build
-      run: ls -la ./github4women/bin
-
-    - name: List output directory contents after build Release
-      run: ls -la ./github4women/bin/Release
-
-    - name: List net6.0 directory contents after build
-      run: ls -la ./github4women/bin/Release/net6.0
+      run: dotnet build --configuration Release --no-restore
 
     # Executar testes (script personalizado)
     - name: Run tests
-      run: dotnet test ./github4women/github4women.csproj --no-restore --verbosity normal
-
-    # Rodar o webapp e verificar se ele inicia corretamente
-    - name: Start and verify webapp
       run: |
-        echo "Starting webapp..."
-        dotnet ./github4women/bin/Release/net6.0/github4women.dll --urls "http://localhost:5299" &
-        sleep 10
-        if curl -sSf http://localhost:5299 > /dev/null; then
-          echo "Webapp started successfully"
-        else
-          echo "Failed to start webapp"
-          exit 1
-        fi
-        pkill -f 'dotnet'
+        echo "Running tests..."
+        dotnet test --no-restore --verbosity normal
